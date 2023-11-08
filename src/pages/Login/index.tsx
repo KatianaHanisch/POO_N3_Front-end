@@ -32,7 +32,7 @@ export default function Login() {
                     type="email"
                     name="email"
                     id="email"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    className="bg-gray-50 outline-gray-400 border border-gray-300 text-gray-800 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     placeholder="Exemplo@gmail.com"
                   />
                 </div>
@@ -45,14 +45,14 @@ export default function Login() {
                     name="password"
                     id="password"
                     placeholder="••••••••"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    className="bg-gray-50 border outline-gray-400 border-gray-300 text-gray-800 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   />
                 </div>
 
                 <button
                   onClick={() => navigate("/home")}
                   // type="submit"
-                  className="w-full bg-blue-600 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                  className="w-full bg-rose-600 hover:bg-rose-700 transition text-white font-semibold text-base rounded-lg px-5 py-2.5 text-center"
                 >
                   Entrar
                 </button>
