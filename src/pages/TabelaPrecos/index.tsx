@@ -25,6 +25,8 @@ export default function TabelaPrecos() {
   const [abrirModalEditar, setAbrirModalEditar] = useState(false);
   const [abrirModalDeletar, setAbrirModalDeletar] = useState(false);
 
+  const tipoUsuario = sessionStorage.getItem("@Auth:TipoUsuario");
+
   function formatarPreco(valor: number) {
     return valor.toLocaleString("pt-BR", {
       style: "currency",
@@ -73,6 +75,7 @@ export default function TabelaPrecos() {
   return (
     <div className="w-full h-full flex flex-col items-start">
       <TituloTabela
+        tipoUsuario={tipoUsuario}
         titulo="Tabela de Preços"
         tituloButton="Adicionar produto"
         abrirModalAdicionar={openModalAdicionar}
@@ -93,22 +96,26 @@ export default function TabelaPrecos() {
                 <tr className={` text-sm font-medium`}>
                   <td className="px-6 py-3">{tipo}</td>
                   <td className="px-6 py-3">{formatarPreco(preco)}</td>
-                  <td className="px-6 py-3">
-                    <button
-                      onClick={() => setAbrirModalEditar(true)}
-                      className="p-1 hover:bg-rose-200 rounded-full transition"
-                    >
-                      <MdModeEditOutline size={21} color="#374151" />
-                    </button>
-                  </td>
-                  <td className="px-6 py-3">
-                    <button
-                      onClick={() => setAbrirModalDeletar(true)}
-                      className="p-1 hover:bg-rose-200 rounded-full transition "
-                    >
-                      <BiSolidTrash size={21} color="#374151" />
-                    </button>
-                  </td>
+                  {tipoUsuario === "empregado" ? null : (
+                    <>
+                      <td className="px-6 py-3">
+                        <button
+                          onClick={() => setAbrirModalEditar(true)}
+                          className="p-1 hover:bg-rose-200 rounded-full transition"
+                        >
+                          <MdModeEditOutline size={21} color="#374151" />
+                        </button>
+                      </td>
+                      <td className="px-6 py-3">
+                        <button
+                          onClick={() => setAbrirModalDeletar(true)}
+                          className="p-1 hover:bg-rose-200 rounded-full transition "
+                        >
+                          <BiSolidTrash size={21} color="#374151" />
+                        </button>
+                      </td>
+                    </>
+                  )}
                 </tr>
                 {abrirModalEditar && (
                   <Modal
@@ -171,7 +178,7 @@ export default function TabelaPrecos() {
       {abrirModalAdicionar && (
         <Modal
           title="Adicionar Produto"
-          textButton="Adionar"
+          textButton="Adicionar"
           confirmarModal={confirmarModalAdicionar}
           cancelarModal={fecharModalAdicionar}
           fecharModal={fecharModalAdicionar}

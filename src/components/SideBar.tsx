@@ -23,6 +23,10 @@ const rotasGerente = [
     Icone: MdOutlineAddShoppingCart,
     href: "/producao",
   },
+  {
+    Icone: TbFiles,
+    href: "/pedidos",
+  },
 ];
 
 const rotasEmpregado = [
@@ -41,7 +45,7 @@ const rotasEmpregado = [
 ];
 
 export default function SideBar() {
-  const tipoUsuario: "empregado" | "gerente" = "gerente";
+  const tipoUsuario = sessionStorage.getItem("@Auth:TipoUsuario");
 
   const location = useLocation();
 
@@ -49,18 +53,18 @@ export default function SideBar() {
     <div className={`space-y-4 py-4 flex flex-col h-full bg-rose-50`}>
       <div className="h-5/6 flex items-center justify-center">
         <div className="flex flex-col h-3/4 justify-evenly">
-          {tipoUsuario === "gerente" ? (
+          {tipoUsuario === "empregado" ? (
             <>
-              {rotasGerente.map(({ href, Icone }) => {
+              {rotasEmpregado.map(({ href, Icone }) => {
                 const isActive = location.pathname === href;
 
                 return (
                   <a key={href} href={href}>
                     <div
-                      className={`h-12 w-12 flex items-center justify-center p-1 transition rounded-full hover:bg-rose-400 ${
+                      className={`h-12 w-12 flex items-center justify-center p-1 transition rounded-full  ${
                         isActive
                           ? "bg-rose-500 hover:bg-rose-500 transition"
-                          : ""
+                          : "hover:bg-rose-300"
                       }`}
                     >
                       <Icone className="h-7 w-7" color="#313131" />
@@ -71,16 +75,16 @@ export default function SideBar() {
             </>
           ) : (
             <>
-              {rotasEmpregado.map(({ href, Icone }) => {
+              {rotasGerente.map(({ href, Icone }) => {
                 const isActive = location.pathname === href;
 
                 return (
                   <a key={href} href={href}>
                     <div
-                      className={`h-12 w-12 flex items-center justify-center p-1 transition rounded-full hover:bg-rose-400 ${
+                      className={`h-12 w-12 flex items-center justify-center p-1 transition rounded-full  ${
                         isActive
                           ? "bg-rose-500 hover:bg-rose-500 transition"
-                          : ""
+                          : "hover:bg-rose-300"
                       }`}
                     >
                       <Icone className="h-7 w-7" color="#313131" />

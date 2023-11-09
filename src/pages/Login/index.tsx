@@ -3,6 +3,13 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
   const navigate = useNavigate();
 
+  function entrarNaDashboard() {
+    const tipoUsuario = "gerente";
+
+    sessionStorage.setItem("@Auth:TipoUsuario", tipoUsuario);
+    navigate("/home");
+  }
+
   return (
     <>
       <section className="bg-rose-50">
@@ -50,7 +57,7 @@ export default function Login() {
                 </div>
 
                 <button
-                  onClick={() => navigate("/home")}
+                  onClick={entrarNaDashboard}
                   // type="submit"
                   className="w-full bg-rose-600 hover:bg-rose-700 transition text-white font-semibold text-base rounded-lg px-5 py-2.5 text-center"
                 >

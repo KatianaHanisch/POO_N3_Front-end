@@ -9,14 +9,14 @@ import TituloTabela from "../../components/TituloTabela";
 import { MdModeEditOutline } from "react-icons/md";
 import { BiSolidTrash } from "react-icons/bi";
 
-type TabelaPrecosProps = {
+type ProducaoProps = {
   id: number;
   nome: string;
   funcao: string;
 };
 
 export default function Producao() {
-  const [dados, setDados] = useState<TabelaPrecosProps[]>([]);
+  const [dados, setDados] = useState<ProducaoProps[]>([]);
   const [nomeColaborador, setNomeColaborador] = useState<string>("");
   const [funcaoColaborador, setFuncaoColaborador] = useState<string>("");
   const [abrirModalAdicionar, setAbrirModalAdicionar] = useState(false);
@@ -136,7 +136,6 @@ export default function Producao() {
                 )}
                 {abrirModalDeletar && (
                   <>
-                    {console.log(index + " " + nome)}
                     <Modal
                       title="Deseja Confirmar?"
                       textButton="Remover"
@@ -164,17 +163,17 @@ export default function Producao() {
       </div>
       {abrirModalAdicionar && (
         <Modal
-          title="Adicionar Produto"
-          textButton="Adionar"
+          title="Adicionar Colaborador"
+          textButton="Adicionar"
           confirmarModal={confirmarModalAdicionar}
           cancelarModal={fecharModalAdicionar}
           fecharModal={fecharModalAdicionar}
         >
           <div className="relative p-6 flex-auto">
-            <p className="mb-4 text-gray-700 text-lg ">Detalhes do produto:</p>
+            <p className="mb-4 text-gray-700 text-lg ">Dados do colaborador:</p>
             <Input
               name="editar"
-              placeholder="Nome produto"
+              placeholder="Nome colaborador"
               type="text"
               value={nomeColaborador}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -183,7 +182,7 @@ export default function Producao() {
             />
             <Input
               name="editar"
-              placeholder="Preço produto"
+              placeholder="Função colaborador"
               type="text"
               value={funcaoColaborador}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
