@@ -5,8 +5,9 @@ import Login from "../pages/Login";
 import Home from "../pages/Home";
 import Pedidos from "../pages/Pedidos";
 import TabelaPrecos from "../pages/TabelaPrecos";
-import Usuarios from "../pages/Usuarios";
+import Empregados from "../pages/Empregados";
 import Producao from "../pages/Producao";
+import AdicionarPedido from "../pages/AdicionarPedido";
 
 export default function AppRouter() {
   return (
@@ -16,8 +17,9 @@ export default function AppRouter() {
         <Route path="home" element={<Home />} />
         <Route path="pedidos" element={<Pedidos />} />
         <Route path="tabelaPrecos" element={<TabelaPrecos />} />
-        <Route path="usuarios" element={<Usuarios />} />
+        <Route path="usuarios" element={<Empregados />} />
         <Route path="producao" element={<Producao />} />
+        <Route path="adicionarPedido" element={<AdicionarPedido />} />
       </Route>
       <Route path="*" element={<Login />} />
     </Routes>

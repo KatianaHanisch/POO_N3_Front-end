@@ -9,15 +9,15 @@ import TituloTabela from "../../components/TituloTabela";
 import { MdModeEditOutline } from "react-icons/md";
 import { BiSolidTrash } from "react-icons/bi";
 
-type UsuariosProps = {
+type EmpregadoProps = {
   id: number;
   nome: string;
   funcao: string;
   salario: number;
 };
 
-export default function Usuarios() {
-  const [dados, setDados] = useState<UsuariosProps[]>([]);
+export default function Empregados() {
+  const [dados, setDados] = useState<EmpregadoProps[]>([]);
   const [empregadoNome, setEmpregadoNome] = useState<string>("");
   const [empregadoFuncao, setEmpregadoFuncao] = useState<string>("");
   const [empregadoSalario, setEmpregadoSalario] = useState<number | undefined>(
