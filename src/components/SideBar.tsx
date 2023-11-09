@@ -2,7 +2,7 @@ import { AiOutlineHome, AiOutlineDollarCircle } from "react-icons/ai";
 import { FiUsers } from "react-icons/fi";
 import { TbFiles } from "react-icons/tb";
 
-import { BiSolidData } from "react-icons/bi";
+import { MdOutlineAddShoppingCart } from "react-icons/md";
 
 import { useLocation } from "react-router-dom";
 
@@ -20,8 +20,8 @@ const rotasGerente = [
     href: "/usuarios",
   },
   {
-    Icone: BiSolidData,
-    href: "/setor",
+    Icone: MdOutlineAddShoppingCart,
+    href: "/producao",
   },
 ];
 
