@@ -41,10 +41,11 @@ export default function TabelaPrecos() {
   });
 
   const [carregando, setCarregando] = useState<boolean>(true);
-  const [openSnackBar, setOpenSnackBar] = useState(false);
-  const [abrirModalAdicionar, setAbrirModalAdicionar] = useState(false);
-  const [abrirModalEditar, setAbrirModalEditar] = useState(false);
-  const [abrirModalDeletar, setAbrirModalDeletar] = useState(false);
+  const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
+  const [abrirModalAdicionar, setAbrirModalAdicionar] =
+    useState<boolean>(false);
+  const [abrirModalEditar, setAbrirModalEditar] = useState<boolean>(false);
+  const [abrirModalDeletar, setAbrirModalDeletar] = useState<boolean>(false);
 
   const tipoUsuario = sessionStorage.getItem("@Auth:TipoUsuario");
 
@@ -90,7 +91,7 @@ export default function TabelaPrecos() {
       return;
     }
 
-    adicionarPreco();
+    adicionarProduto();
 
     setNomeProduto("");
     setPrecoProduto(undefined);
@@ -128,7 +129,7 @@ export default function TabelaPrecos() {
     setAbrirModalDeletar(false);
   }
 
-  async function adicionarPreco() {
+  async function adicionarProduto() {
     try {
       await api.post("createTabelaDePrecos", {
         tipo: nomeProduto,
