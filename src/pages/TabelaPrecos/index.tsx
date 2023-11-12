@@ -12,6 +12,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import { MdModeEditOutline } from "react-icons/md";
 import { BiSolidTrash } from "react-icons/bi";
+import { VscSearchStop } from "react-icons/vsc";
 
 type TabelaPrecosProps = {
   id: number | undefined;
@@ -183,7 +184,7 @@ export default function TabelaPrecos() {
       setTipoSnackBar("erro");
       setMessagemSnackBar("Ocorreu um erro ao deletar produto");
       setOpenSnackBar(true);
-      console.error("Erro ao editar produto:", error);
+      console.error("Erro ao deletar produto:", error);
     }
   }
 
@@ -224,60 +225,71 @@ export default function TabelaPrecos() {
             abrirModalAdicionar={openModalAdicionar}
           />
           <div className="flex items-center justify-center w-full mt-1 ">
-            <table className={`bg-white w-10/12 divide-y text-left rounded-md`}>
-              <thead className={`bg-rose-500 text-base font-medium `}>
-                <tr>
-                  <th className="px-6 py-3">Tipo produto</th>
-                  <th className="px-6 py-3">Preço</th>
-                  <th className="px-6 py-3"></th>
-                  <th className="px-6 py-3"></th>
-                </tr>
-              </thead>
-              <tbody className={`divide-y`}>
-                {dados.map(({ id, tipo, preco }) => (
-                  <React.Fragment key={id}>
-                    <tr className={` text-sm font-medium`}>
-                      <td className="px-6 py-3">{tipo}</td>
-                      <td className="px-6 py-3">{formatarPreco(preco)}</td>
-                      {tipoUsuario === "empregado" ? null : (
-                        <>
-                          <td className="px-6 py-3">
-                            <button
-                              onClick={() => {
-                                setAbrirModalEditar(true);
-                                setProdutoEditando({
-                                  id: id,
-                                  tipo: tipo,
-                                  preco: preco,
-                                });
-                              }}
-                              className="p-1 hover:bg-rose-200 rounded-full transition"
-                            >
-                              <MdModeEditOutline size={21} color="#374151" />
-                            </button>
-                          </td>
-                          <td className="px-6 py-3">
-                            <button
-                              onClick={() => {
-                                setAbrirModalDeletar(true);
-                                setProdutoRemover({
-                                  id: id,
-                                  tipo: tipo,
-                                  preco: preco,
-                                });
-                              }}
-                              className="p-1 hover:bg-rose-200 rounded-full transition "
-                            >
-                              <BiSolidTrash size={21} color="#374151" />
-                            </button>
-                          </td>
-                        </>
-                      )}
-                    </tr>
-                  </React.Fragment>
-                ))}
-              </tbody>
-            </table>
+            {dados.length === 0 ? (
+              <div className="flex items-center justify-center flex-col w-full h-96 ">
+                <VscSearchStop color="#565656" size={35} />
+                <p className="text-gray-500 text-lg">
+                  Nenhum produto encontrado
+                </p>
+              </div>
+            ) : (
+              <table
+                className={`bg-white w-10/12 divide-y text-left rounded-md`}
+              >
+                <thead className={`bg-rose-500 text-base font-medium `}>
+                  <tr>
+                    <th className="px-6 py-3">Tipo produto</th>
+                    <th className="px-6 py-3">Preço</th>
+                    <th className="px-6 py-3"></th>
+                    <th className="px-6 py-3"></th>
+                  </tr>
+                </thead>
+                <tbody className={`divide-y`}>
+                  {dados.map(({ id, tipo, preco }) => (
+                    <React.Fragment key={id}>
+                      <tr className={` text-sm font-medium`}>
+                        <td className="px-6 py-3">{tipo}</td>
+                        <td className="px-6 py-3">{formatarPreco(preco)}</td>
+                        {tipoUsuario === "empregado" ? null : (
+                          <>
+                            <td className="px-6 py-3">
+                              <button
+                                onClick={() => {
+                                  setAbrirModalEditar(true);
+                                  setProdutoEditando({
+                                    id: id,
+                                    tipo: tipo,
+                                    preco: preco,
+                                  });
+                                }}
+                                className="p-1 hover:bg-rose-200 rounded-full transition"
+                              >
+                                <MdModeEditOutline size={21} color="#374151" />
+                              </button>
+                            </td>
+                            <td className="px-6 py-3">
+                              <button
+                                onClick={() => {
+                                  setAbrirModalDeletar(true);
+                                  setProdutoRemover({
+                                    id: id,
+                                    tipo: tipo,
+                                    preco: preco,
+                                  });
+                                }}
+                                className="p-1 hover:bg-rose-200 rounded-full transition "
+                              >
+                                <BiSolidTrash size={21} color="#374151" />
+                              </button>
+                            </td>
+                          </>
+                        )}
+                      </tr>
+                    </React.Fragment>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
           {openSnackBar && (
             <Snackbar
