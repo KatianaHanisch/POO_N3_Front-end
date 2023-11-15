@@ -19,12 +19,16 @@ type EmpregadoProps = {
   nome: string;
   funcao: string;
   salario: number | undefined;
+  senha?: string;
+  email?: string;
 };
 
 export default function Empregados() {
   const [dados, setDados] = useState<EmpregadoProps[]>([]);
   const [empregadoNome, setEmpregadoNome] = useState<string>("");
   const [empregadoFuncao, setEmpregadoFuncao] = useState<string>("");
+  const [empregadoSenha, setEmpregadoSenha] = useState<string>("");
+  const [empregadoEmail, setEmpregadoEmail] = useState<string>("");
   const [empregadoSalario, setEmpregadoSalario] = useState<number | undefined>(
     undefined
   );
@@ -34,12 +38,16 @@ export default function Empregados() {
     nome: "",
     funcao: "",
     salario: undefined,
+    email: "",
+    senha: "",
   });
 
   const [empregadoRemover, setEmpregadoRemover] = useState<EmpregadoProps>({
     id: undefined,
     nome: "",
     funcao: "",
+    senha: "",
+    email: "",
     salario: undefined,
   });
 
@@ -98,6 +106,8 @@ export default function Empregados() {
     if (
       empregadoNome === "" ||
       empregadoFuncao === "" ||
+      empregadoSenha === "" ||
+      empregadoEmail === "" ||
       empregadoSalario === undefined
     ) {
       return;
@@ -107,6 +117,8 @@ export default function Empregados() {
 
     setEmpregadoNome("");
     setEmpregadoFuncao("");
+    setEmpregadoSenha("");
+    setEmpregadoEmail("");
     setEmpregadoSalario(undefined);
 
     setAbrirModalAdicionar(false);
@@ -119,6 +131,8 @@ export default function Empregados() {
   function confirmarModalEditar(id: number | undefined) {
     if (
       empregadoEditando.nome === "" ||
+      empregadoEditando.senha === "" ||
+      empregadoEditando.email === "" ||
       empregadoEditando.funcao === "" ||
       empregadoEditando.salario === 0
     ) {
@@ -133,6 +147,8 @@ export default function Empregados() {
       id: undefined,
       nome: "",
       funcao: "",
+      senha: "",
+      email: "",
       salario: undefined,
     });
 
@@ -154,17 +170,27 @@ export default function Empregados() {
 
   async function adicionarEmpregado() {
     try {
-      await api.post("createEmpregado", {
+      const response = await api.post("createEmpregado", {
         nome: empregadoNome,
         funcao: empregadoFuncao,
         salario: empregadoSalario,
+        senha: empregadoSenha,
+        email: empregadoEmail,
       });
 
-      setTipoSnackBar("sucesso");
-      setMessagemSnackBar("Empregado cadastrado com sucesso");
-      setOpenSnackBar(true);
+      if (response.status == 200) {
+        setTipoSnackBar("sucesso");
+        if (response.data === "Empregado cadastrado com sucesso.") {
+          setMessagemSnackBar("Empregado cadastrado com sucesso");
+        } else {
+          setTipoSnackBar("erro");
+          setMessagemSnackBar(response.data);
+          setOpenSnackBar(true);
+        }
+        setOpenSnackBar(true);
 
-      getEmpregados();
+        getEmpregados();
+      }
     } catch (error) {
       setTipoSnackBar("erro");
       setMessagemSnackBar("Ocorreu um erro ao cadastrar o empregado");
@@ -176,17 +202,27 @@ export default function Empregados() {
 
   async function editarProduto(id: number) {
     try {
-      await api.put(`updateEmpregado/${id}`, {
+      const response = await api.put(`updateEmpregado/${id}`, {
         nome: empregadoEditando.nome,
         funcao: empregadoEditando.funcao,
         salario: empregadoEditando.salario,
+        senha: empregadoEditando.senha,
+        email: empregadoEditando.email,
       });
 
-      setTipoSnackBar("sucesso");
-      setMessagemSnackBar("Empregado editado com sucesso");
-      setOpenSnackBar(true);
+      if (response.status == 200) {
+        setTipoSnackBar("sucesso");
+        if (response.data === "Empregado atualizado com sucesso.") {
+          setMessagemSnackBar("Empregado atualizado com sucesso.");
+        } else {
+          setTipoSnackBar("erro");
+          setMessagemSnackBar(response.data);
+          setOpenSnackBar(true);
+        }
+        setOpenSnackBar(true);
 
-      getEmpregados();
+        getEmpregados();
+      }
     } catch (error) {
       setTipoSnackBar("erro");
       setMessagemSnackBar("Ocorreu um erro ao editar empregado");
@@ -263,12 +299,14 @@ export default function Empregados() {
                     <th className="px-6 py-3">Nome</th>
                     <th className="px-6 py-3">Função</th>
                     <th className="px-6 py-3">Salário</th>
+                    <th className="px-6 py-3">E-mail</th>
+                    <th className="px-6 py-3">Senha</th>
                     <th className="px-6 py-3"></th>
                     <th className="px-6 py-3"></th>
                   </tr>
                 </thead>
                 <tbody className={`divide-y`}>
-                  {dados.map(({ id, nome, funcao, salario }) => (
+                  {dados.map(({ id, nome, funcao, salario, senha, email }) => (
                     <React.Fragment key={id}>
                       <tr className={` text-sm font-medium`}>
                         <td className="px-6 py-3">{nome}</td>
@@ -276,6 +314,9 @@ export default function Empregados() {
                         <td className="px-6 py-3">
                           {formatarSalario(salario)}
                         </td>
+                        <td className="px-6 py-3">{email}</td>
+                        <td className="px-6 py-3">{senha}</td>
+
                         <td className="px-6 py-3">
                           <button
                             onClick={() => {
@@ -285,6 +326,8 @@ export default function Empregados() {
                                 nome: nome,
                                 salario: salario,
                                 funcao: funcao,
+                                email: email,
+                                senha: senha,
                               });
                             }}
                             className="p-1 hover:bg-rose-200 rounded-full transition"
@@ -370,6 +413,24 @@ export default function Empregados() {
                     setEmpregadoSalario(Number(e.target.value))
                   }
                 />
+                <Input
+                  name="editar"
+                  placeholder="E-mail empregado"
+                  type="text"
+                  value={empregadoEmail || ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setEmpregadoEmail(String(e.target.value))
+                  }
+                />
+                <Input
+                  name="editar"
+                  placeholder="Senha empregado"
+                  type="password"
+                  value={empregadoSenha || ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setEmpregadoSenha(String(e.target.value))
+                  }
+                />
               </div>
             </Modal>
           )}
@@ -418,6 +479,30 @@ export default function Empregados() {
                     setEmpregadoEditando((prevEmpregadoEditando) => ({
                       ...prevEmpregadoEditando,
                       salario: Number(e.target.value),
+                    }))
+                  }
+                />
+                <Input
+                  name="editar"
+                  placeholder="Email empregado"
+                  type="text"
+                  value={empregadoEditando.email || ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setEmpregadoEditando((prevEmpregadoEditando) => ({
+                      ...prevEmpregadoEditando,
+                      email: String(e.target.value),
+                    }))
+                  }
+                />
+                <Input
+                  name="editar"
+                  placeholder="Senha empregado"
+                  type="password"
+                  value={empregadoEditando.senha || ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setEmpregadoEditando((prevEmpregadoEditando) => ({
+                      ...prevEmpregadoEditando,
+                      senha: String(e.target.value),
                     }))
                   }
                 />

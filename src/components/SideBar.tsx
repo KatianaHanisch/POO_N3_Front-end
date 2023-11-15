@@ -1,7 +1,9 @@
 import { AiOutlineHome, AiOutlineDollarCircle } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+
 import { FiUsers } from "react-icons/fi";
 import { TbFiles } from "react-icons/tb";
-import { MdOutlineAddShoppingCart } from "react-icons/md";
+import { MdOutlineAddShoppingCart, MdExitToApp } from "react-icons/md";
 
 import { useLocation } from "react-router-dom";
 
@@ -44,9 +46,19 @@ const rotasEmpregado = [
 ];
 
 export default function SideBar() {
+  const navigate = useNavigate();
+
   const tipoUsuario = sessionStorage.getItem("@Auth:TipoUsuario");
 
   const location = useLocation();
+
+  const logout = () => {
+    sessionStorage.removeItem("@Auth:Nome");
+    sessionStorage.removeItem("@Auth:TipoUsuario");
+    sessionStorage.removeItem("@Auth:Autenticado");
+
+    navigate("/home");
+  };
 
   return (
     <div className={`space-y-4 py-4 flex flex-col h-full bg-rose-50`}>
@@ -93,6 +105,13 @@ export default function SideBar() {
               })}
             </>
           )}
+          <button onClick={() => logout()}>
+            <div
+              className={`h-12 w-12 flex items-center justify-center p-1 transition rounded-full hover:bg-rose-300`}
+            >
+              <MdExitToApp className="h-7 w-7" color="#313131" />
+            </div>
+          </button>
         </div>
       </div>
     </div>
