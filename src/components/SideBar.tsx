@@ -1,7 +1,6 @@
 import { AiOutlineHome, AiOutlineDollarCircle } from "react-icons/ai";
 import { FiUsers } from "react-icons/fi";
 import { TbFiles } from "react-icons/tb";
-import { BiSolidAddToQueue } from "react-icons/bi";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 
 import { useLocation } from "react-router-dom";
@@ -27,10 +26,6 @@ const rotasGerente = [
     Icone: TbFiles,
     href: "/pedidos",
   },
-  {
-    Icone: BiSolidAddToQueue,
-    href: "/adicionarPedido",
-  },
 ];
 
 const rotasEmpregado = [
@@ -45,10 +40,6 @@ const rotasEmpregado = [
   {
     Icone: TbFiles,
     href: "/pedidos",
-  },
-  {
-    Icone: BiSolidAddToQueue,
-    href: "/adicionarPedido",
   },
 ];
 

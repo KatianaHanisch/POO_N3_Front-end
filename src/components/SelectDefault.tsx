@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 type PedidoProps = {
   id: number;
@@ -13,28 +13,36 @@ type SelectProps = {
   tipo: string;
   onChange?: (value: string | null) => void;
   value?: string | null;
+  defaultValue?: string | null;
 };
 
-export default function Select({
+export default function SelectDefault({
   dados,
   tituloSelect,
   tipo,
   onChange,
   value,
+  defaultValue,
 }: SelectProps) {
-  const [selectedValue, setSelectedValue] = useState<string | null>(null);
+  const [selectedValue, setSelectedValue] = useState<string | null>(
+    value || defaultValue || null
+  );
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = event.target.value;
     setSelectedValue(selected);
+    // Chame a função de retorno de chamada fornecida para notificar a alteração
     if (onChange) {
       onChange(selected);
     }
   };
 
+  // Atualize o estado se o componente não é controlado pelo React
   useEffect(() => {
-    setSelectedValue(value || null);
-  }, [value]);
+    if (value === undefined) {
+      setSelectedValue(defaultValue || null);
+    }
+  }, [value, defaultValue]);
 
   return (
     <div className="flex w-full items-center gap-3">
