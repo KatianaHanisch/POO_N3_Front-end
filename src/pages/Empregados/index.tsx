@@ -300,7 +300,7 @@ export default function Empregados() {
                     <th className="px-6 py-3">Função</th>
                     <th className="px-6 py-3">Salário</th>
                     <th className="px-6 py-3">E-mail</th>
-                    <th className="px-6 py-3">Senha</th>
+                    {/* <th className="px-6 py-3">Senha</th> */}
                     <th className="px-6 py-3"></th>
                     <th className="px-6 py-3"></th>
                   </tr>
@@ -315,7 +315,7 @@ export default function Empregados() {
                           {formatarSalario(salario)}
                         </td>
                         <td className="px-6 py-3">{email}</td>
-                        <td className="px-6 py-3">{senha}</td>
+                        {/* <td className="px-6 py-3">{senha}</td> */}
 
                         <td className="px-6 py-3">
                           <button
