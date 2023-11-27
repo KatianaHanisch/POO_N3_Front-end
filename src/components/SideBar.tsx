@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { FiUsers } from "react-icons/fi";
 import { TbFiles } from "react-icons/tb";
+import { FaUserTie } from "react-icons/fa";
 import { MdOutlineAddShoppingCart, MdExitToApp } from "react-icons/md";
 
 import { useLocation } from "react-router-dom";
@@ -19,6 +20,10 @@ const rotasGerente = [
   {
     Icone: FiUsers,
     href: "/usuarios",
+  },
+  {
+    Icone: FaUserTie,
+    href: "/gerente",
   },
   {
     Icone: MdOutlineAddShoppingCart,
