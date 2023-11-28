@@ -376,7 +376,7 @@ export default function Gerente() {
           )}
           {abrirModalAdicionar && (
             <Modal
-              title="Adicionar Empregado"
+              title="Adicionar Gerente"
               textButton="Adicionar"
               confirmarModal={confirmarModalAdicionar}
               cancelarModal={fecharModalAdicionar}
@@ -436,7 +436,7 @@ export default function Gerente() {
           )}
           {abrirModalEditar && (
             <Modal
-              title="Editar Empregado"
+              title="Editar Gerente"
               textButton="Editar"
               confirmarModal={() => confirmarModalEditar(gerenteEditando.id)}
               cancelarModal={fecharModalEditar}
@@ -460,7 +460,7 @@ export default function Gerente() {
                 />
                 <Input
                   name="editar"
-                  placeholder="Função"
+                  placeholder="Setor"
                   type="text"
                   value={gerenteEditando.setor}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
