@@ -18,12 +18,16 @@ type ProducaoProps = {
   id: number | undefined;
   nome: string;
   funcao: string;
+  salario: number | undefined;
 };
 
 export default function Producao() {
   const [dados, setDados] = useState<ProducaoProps[]>([]);
   const [nomeColaborador, setNomeColaborador] = useState<string>("");
   const [funcaoColaborador, setFuncaoColaborador] = useState<string>("");
+  const [salarioColaborador, setSalarioColaborador] = useState<
+    undefined | number
+  >(undefined);
 
   const [messagemSnackBar, setMessagemSnackBar] = useState<string>("");
   const [tipoSnackBar, setTipoSnackBar] = useState<string>("");
@@ -32,12 +36,14 @@ export default function Producao() {
     id: undefined,
     nome: "",
     funcao: "",
+    salario: undefined,
   });
 
   const [producaoEditando, setProducaoEditando] = useState<ProducaoProps>({
     id: undefined,
     nome: "",
     funcao: "",
+    salario: undefined,
   });
 
   const [carregando, setCarregando] = useState<boolean>(true);
@@ -46,6 +52,17 @@ export default function Producao() {
   const [abrirModalAdicionar, setAbrirModalAdicionar] = useState(false);
   const [abrirModalEditar, setAbrirModalEditar] = useState(false);
   const [abrirModalDeletar, setAbrirModalDeletar] = useState(false);
+
+  function formatarSalario(valor: number | undefined) {
+    if (valor === undefined) {
+      return "";
+    }
+
+    return valor.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+  }
 
   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -99,7 +116,12 @@ export default function Producao() {
       editarProducao(id);
     }
 
-    setProducaoEditando({ id: undefined, nome: "", funcao: "" });
+    setProducaoEditando({
+      id: undefined,
+      nome: "",
+      funcao: "",
+      salario: undefined,
+    });
 
     setAbrirModalEditar(false);
   }
@@ -122,6 +144,7 @@ export default function Producao() {
       await api.post("createProducao", {
         nome: nomeColaborador,
         funcao: funcaoColaborador,
+        salario: salarioColaborador,
       });
 
       setTipoSnackBar("sucesso");
@@ -143,6 +166,7 @@ export default function Producao() {
       await api.put(`updateProducao/${id}`, {
         nome: producaoEditando.nome,
         funcao: producaoEditando.funcao,
+        salario: producaoEditando.salario,
       });
 
       setTipoSnackBar("sucesso");
@@ -226,16 +250,20 @@ export default function Producao() {
                   <tr>
                     <th className="px-6 py-3">Nome</th>
                     <th className="px-6 py-3">Função</th>
+                    <th className="px-6 py-3">Salário</th>
                     <th className="px-6 py-3"></th>
                     <th className="px-6 py-3"></th>
                   </tr>
                 </thead>
                 <tbody className={`divide-y`}>
-                  {dados.map(({ id, nome, funcao }, index) => (
+                  {dados.map(({ id, nome, funcao, salario }, index) => (
                     <React.Fragment key={id}>
                       <tr key={index} className={` text-sm font-medium`}>
                         <td className="px-6 py-3">{nome}</td>
                         <td className="px-6 py-3">{funcao}</td>
+                        <td className="px-6 py-3">
+                          {formatarSalario(salario)}
+                        </td>
                         <td className="px-6 py-3">
                           <button
                             onClick={() => {
@@ -244,6 +272,7 @@ export default function Producao() {
                                 id: id,
                                 nome: nome,
                                 funcao: funcao,
+                                salario: salario,
                               });
                             }}
                             className="p-1 hover:bg-rose-200 rounded-full transition"
@@ -259,6 +288,7 @@ export default function Producao() {
                                 id: id,
                                 nome: nome,
                                 funcao: funcao,
+                                salario: salario,
                               });
                             }}
                             className="p-1 hover:bg-rose-200 rounded-full transition "
@@ -319,6 +349,15 @@ export default function Producao() {
                     setFuncaoColaborador(e.target.value)
                   }
                 />
+                <Input
+                  name="editar"
+                  placeholder="Salário colaborador"
+                  type="number"
+                  value={salarioColaborador || ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setSalarioColaborador(Number(e.target.value))
+                  }
+                />
               </div>
             </Modal>
           )}
@@ -355,6 +394,18 @@ export default function Producao() {
                     setProducaoEditando((prevProducaoEditando) => ({
                       ...prevProducaoEditando,
                       funcao: e.target.value,
+                    }))
+                  }
+                />
+                <Input
+                  name="editar"
+                  placeholder="Salario empregado"
+                  type="number"
+                  value={producaoEditando.salario || ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setProducaoEditando((prevProducaoEditando) => ({
+                      ...prevProducaoEditando,
+                      salario: Number(e.target.value),
                     }))
                   }
                 />
