@@ -103,10 +103,7 @@ export default function Pedidos() {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
+  const handleClose = (reason?: string) => {
     if (reason === "clickaway") {
       return;
     }
@@ -519,11 +516,11 @@ export default function Pedidos() {
               <Snackbar
                 open={openSnackBar}
                 autoHideDuration={4000}
-                onClose={handleClose}
+                onClose={() => handleClose}
                 anchorOrigin={{ vertical: "top", horizontal: "center" }}
               >
                 <Alert
-                  onClose={handleClose}
+                  onClose={() => handleClose}
                   severity={tipoSnackBar === "sucesso" ? "success" : "error"}
                   sx={{ width: "100%" }}
                 >

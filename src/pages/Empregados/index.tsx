@@ -79,10 +79,7 @@ export default function Empregados() {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
+  const handleClose = (reason?: string) => {
     if (reason === "clickaway") {
       return;
     }
@@ -300,7 +297,6 @@ export default function Empregados() {
                     <th className="px-6 py-3">Função</th>
                     <th className="px-6 py-3">Salário</th>
                     <th className="px-6 py-3">E-mail</th>
-                    {/* <th className="px-6 py-3">Senha</th> */}
                     <th className="px-6 py-3"></th>
                     <th className="px-6 py-3"></th>
                   </tr>
@@ -362,11 +358,11 @@ export default function Empregados() {
             <Snackbar
               open={openSnackBar}
               autoHideDuration={3000}
-              onClose={handleClose}
+              onClose={() => handleClose}
               anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
               <Alert
-                onClose={handleClose}
+                onClose={() => handleClose}
                 severity={tipoSnackBar === "sucesso" ? "success" : "error"}
                 sx={{ width: "100%" }}
               >
